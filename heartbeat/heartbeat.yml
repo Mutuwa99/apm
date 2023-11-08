@@ -12,12 +12,14 @@ heartbeat.monitors:
     status:
       - 200  # Check for a status code of 200
       - 301  # Check for a status code of 301 (permanent redirect)
+      - 302  # Check for a status code of 302 
+
 
 - type: http
   schedule: '@every 10s'
   urls:
-    - https://google.com
-  name:  google # You can specify a name for this monitor
+    - https://noble-mutuwa.com
+  name:  Noble website # You can specify a name for this monitor
   check.request:
     method: GET
     headers:
@@ -26,6 +28,21 @@ heartbeat.monitors:
     status:
       - 200  # Check for a status code of 200
       - 301  # Check for a status code of 301 (permanent redirect)
+      
+- type: http
+  schedule: '@every 10s'
+  urls:
+    - https://grafana.noble-mutuwa.com
+  name:  Noble grafana # You can specify a name for this monitor
+  check.request:
+    method: GET
+    headers:
+      'Content-Type': 'application/json'
+  check.response:
+    status:
+      - 200  # Check for a status code of 200
+      - 301  # Check for a status code of 301 (permanent redirect)
+
 
 output.elasticsearch:
   hosts: ["elasticsearch:9200"]
