@@ -1,6 +1,6 @@
 version: '3.6'
 services:
-  Elasticsearch:
+  elasticsearch:
     image: elasticsearch:7.16.2
     container_name: elasticsearch
     restart: always
@@ -23,7 +23,7 @@ services:
     - ./logstash/:/logstash_dir
     command: logstash -f /logstash_dir/logstash.conf 
     depends_on:
-      - Elasticsearch
+      - elasticsearch
     ports:
     - '9600:9600'
     environment:
@@ -40,7 +40,17 @@ services:
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200  
     depends_on:
-      - Elasticsearch  
+      - elasticsearch  
+    networks:
+      - elk
+
+  heartbeat:
+    image: docker.elastic.co/beats/heartbeat:7.16.1
+    container_name: heartbeat
+    volumes:
+      - ./heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
+    depends_on:
+      - elasticsearch
     networks:
       - elk
 volumes:

@@ -1,0 +1,35 @@
+heartbeat.monitors:
+- type: http
+  schedule: '@every 10s'
+  urls:
+    - https://monitoring.noble-mutuwa.com
+  name: Noble server  # You can specify a name for this monitor
+  check.request:
+    method: GET
+    headers:
+      'Content-Type': 'application/json'
+  check.response:
+    status:
+      - 200  # Check for a status code of 200
+      - 301  # Check for a status code of 301 (permanent redirect)
+
+- type: http
+  schedule: '@every 10s'
+  urls:
+    - https://google.com
+  name:  google # You can specify a name for this monitor
+  check.request:
+    method: GET
+    headers:
+      'Content-Type': 'application/json'
+  check.response:
+    status:
+      - 200  # Check for a status code of 200
+      - 301  # Check for a status code of 301 (permanent redirect)
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+
+
+setup.kibana:
+  host: "Kibana:5601"
