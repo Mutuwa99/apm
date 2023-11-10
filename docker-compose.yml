@@ -5,26 +5,30 @@ services:
     container_name: elasticsearch
     restart: always
     volumes:
-    - elastic_data:/usr/share/elasticsearch/data/
+      - elastic_data:/usr/share/elasticsearch/data/
     environment:
       ES_JAVA_OPTS: "-Xmx1g -Xms1g"
-      discovery.type: single-node    
+      discovery.type: single-node
+      ELASTIC_PASSWORD: admin
+      ELASTICSEARCH_USERNAME: admin
     ports:
-    - '9200:9200'
-    - '9300:9300'
+      - '9200:9200'
+      - '9300:9300'
     networks:
       - elk
 
-  Kibana:
+  kibana:
     image: kibana:7.16.2
     container_name: kibana
-    restart: always       
+    restart: always
     ports:
-    - '5601:5601'
+      - '5601:5601'
     environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200  
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_USERNAME: admin
+      ELASTICSEARCH_PASSWORD: admin
     depends_on:
-      - elasticsearch  
+      - elasticsearch
     networks:
       - elk
 
@@ -37,6 +41,7 @@ services:
       - elasticsearch
     networks:
       - elk
+
 volumes:
   elastic_data: {}
 
