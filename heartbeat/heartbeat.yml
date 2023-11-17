@@ -63,6 +63,7 @@ heartbeat.monitors:
 
 output.elasticsearch:
   hosts: ["elasticsearch:9200"]
+  index: "heartbeat-%{[agent.version]}-%{+yyyy.MM.dd}"
 
 
 setup.kibana:
