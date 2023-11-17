@@ -73,6 +73,8 @@ services:
 
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    container_name: elastic
+    restart: always
     labels:
       co.elastic.logs/module: elasticsearch
     volumes:
@@ -114,6 +116,8 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
+    container_name: Kibana
+    restart: always
     labels:
       co.elastic.logs/module: kibana
     volumes:
@@ -143,6 +147,7 @@ services:
 
   heartbeat:
     image: docker.elastic.co/beats/heartbeat:7.16.1
+    restart: always
     container_name: heartbeat
     volumes:
       - ./heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
