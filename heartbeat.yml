@@ -3,7 +3,22 @@ heartbeat.monitors:
     schedule: '@every 10s'
     urls:
       - https://monitoring.noble-mutuwa.com
-    name: Noble server
+    name: Noble  monitoring server
+    check.request:
+      method: GET
+      headers:
+        'Content-Type': 'application/json'
+    check.response:
+      status:
+        - 200
+        - 301
+        - 302
+
+  - type: http
+    schedule: '@every 10s'
+    urls:
+      - https://kibana.noble-mutuwa.com
+    name: Noble kibana server
     check.request:
       method: GET
       headers:
