@@ -31,8 +31,8 @@ heartbeat.monitors:
 
 output.elasticsearch:
   hosts: https://es01:9200
-  username: elastic
-  password: changeme
+  username: Mutuwa
+  password: Mutuwa
   index: "heartbeat-%{[agent.version]}-%{+yyyy.MM.dd}"
   ssl.enabled: true
   ssl.certificate_authorities: "/usr/share/heartbeat/certs/ca/ca.crt"
