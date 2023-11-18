@@ -3,7 +3,7 @@ server {
     server_name kibana.noble-mutuwa.com;
 
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:5601;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -17,7 +17,7 @@ server {
 sudo apt update
 sudo apt install certbot python3-certbot-nginx
 
-sudo certbot --nginx -d example.com
+sudo certbot --nginx -d kibana.noble-mutuwa.com
 
 
 
@@ -37,11 +37,13 @@ metricbeat.modules:
   period: 10s
   processes: ['.*']
 
+
 output.elasticsearch:
-  hosts: ["localhost:9200"]
-  # username: "your-elasticsearch-username"
-  # password: "your-elasticsearch-password"
-  index: "metricbeat-%{[agent.version]}-%{+yyyy.MM.dd}"
+  hosts: ["https://localhost:9200"]
+  username: "elastic"
+  password: "Mutuwa"
+  protocol: "https"
+  ssl.certificate_authorities: ["/var/lib/docker/volumes/apm_certs/_data/ca/ca.crt"]
 
 # setup.kibana:
 #   host: "your-kibana-host:5601"
@@ -80,3 +82,23 @@ logging.files:
 
 
 
+
+auditbeat.modules:
+  - module: auditd
+    audit_rule_files: [ '${path.config}/audit.rules.d/*.conf' ]
+    device: /dev/sda1
+
+output.elasticsearch:
+  hosts: ["https://kibana.noble-mutuwa.com:9200"]
+  username: "elastic"
+  password: "Mutuwa"
+  protocol: "https"
+  ssl.certificate_authorities: ["/var/lib/docker/volumes/apm_certs/_data/ca/ca.crt"]
+
+
+
+
+/var/lib/docker/volumes/apm_certs/_data/ca/
+
+
+curl -X PUT "localhost:9200/.kibana_8.7.1_001/_settings" -H 'Content-Type: application/json' -d '{"settings": {"index.blocks.write": false}}'

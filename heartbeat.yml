@@ -45,3 +45,4 @@ setup.kibana:
 # Additional settings for index template
 setup.template.name: "heartbeat"
 setup.template.pattern: "heartbeat-*"
+

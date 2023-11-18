@@ -2,18 +2,18 @@ version: "3.8"
 
 volumes:
   certs:
-    driver: local
+    external: true
   esdata01:
-    driver: local
+    external: true
   kibanadata:
-    driver: local
+    external: true
   heartbeatdata:
-    driver: local
+    external: true
 
 networks:
   default:
     name: elastic
-    external: false
+    external: true
 
 services:
   setup:
