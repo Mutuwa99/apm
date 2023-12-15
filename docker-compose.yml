@@ -139,16 +139,16 @@ services:
       timeout: 10s
       retries: 120
 
-  heartbeat:
-    image: docker.elastic.co/beats/heartbeat:7.16.1
-    restart: always
-    container_name: heartbeat
-    volumes:
-      # - ./heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
-      - certs:/usr/share/heartbeat/certs
-    environment:
-      - SERVERNAME=heartbeat
-      - ELASTICSEARCH_HOSTS=https://54.234.183.94:9200  
-    depends_on:
-      es01:
-        condition: service_healthy
+  # heartbeat:
+  #   image: docker.elastic.co/beats/heartbeat:7.16.1
+  #   restart: always
+  #   container_name: heartbeat
+  #   volumes:
+  #     # - ./heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
+  #     - certs:/usr/share/heartbeat/certs
+  #   environment:
+  #     - SERVERNAME=heartbeat
+  #     - ELASTICSEARCH_HOSTS=https://54.234.183.94:9200  
+  #   depends_on:
+  #     es01:
+  #       condition: service_healthy
