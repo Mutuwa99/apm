@@ -2,18 +2,18 @@ version: "3.8"
 
 volumes:
   certs:
-    external: true
+    external: false
   esdata01:
-    external: true
+    external: false
   kibanadata:
-    external: true
+    external: false
   heartbeatdata:
     external: true
 
 networks:
   default:
     name: elastic
-    external: true
+    external: false
 
 services:
   setup:
