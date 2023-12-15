@@ -42,13 +42,13 @@ services:
           "  - name: es01\n"\
           "    dns:\n"\
           "      - es01\n"\
-          "      - 54.89.184.45\n"\
+          "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "  - name: kibana\n"\
           "    dns:\n"\
           "      - kibana\n"\
-          "      - 54.89.184.45\n"\
+          "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           > config/certs/instances.yml;
@@ -99,6 +99,7 @@ services:
       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
       - xpack.security.transport.ssl.verification_mode=certificate
       - xpack.license.self_generated.type=${LICENSE}
+      - discovery.seed_hosts=54.89.184.45:9200  # Add this line to specify the seed host
     mem_limit: ${ES_MEM_LIMIT}
     ulimits:
       memlock:
@@ -127,7 +128,7 @@ services:
       - ${KIBANA_PORT}:5601
     environment:
       - SERVERNAME=kibana
-      - ELASTICSEARCH_HOSTS=https://es01:9200
+      - ELASTICSEARCH_HOSTS=https://54.89.184.45:9200  # Update Elasticsearch host
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
@@ -139,7 +140,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -s -I http://54.89.184.45:5601 | grep -q 'HTTP/1.1 302 Found'",
+          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
         ]
       interval: 10s
       timeout: 10s
@@ -154,7 +155,7 @@ services:
       - certs:/usr/share/heartbeat/certs
     environment:
       - SERVERNAME=heartbeat
-      - ELASTICSEARCH_HOSTS=https://es01:9200  
+      - ELASTICSEARCH_HOSTS=https://54.89.184.45:9200  # Update Elasticsearch host
     depends_on:
       es01:
-        condition: service_healthy
+        condition
