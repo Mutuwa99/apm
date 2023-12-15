@@ -144,7 +144,7 @@ services:
     restart: always
     container_name: heartbeat
     volumes:
-      - ./heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
+      # - ./heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
       - certs:/usr/share/heartbeat/certs
     environment:
       - SERVERNAME=heartbeat
